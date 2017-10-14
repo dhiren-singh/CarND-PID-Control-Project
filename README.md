@@ -1,7 +1,32 @@
 # CarND-Controls-PID
 Self-Driving Car Engineer Nanodegree Program
 
+[//]: # (Image References)
+[image1]: ./Preview.png
+
+
 ---
+While building the PID controller I tried out two ways:
+
+* Constant Throttle.
+* Change Throttle as per Steering value.
+
+## Constant Throttle
+The P parameter represents how hard we want to turn in proportion to the error. Initially the first value I tried was 1.0, this made the car overshoot because the angle was too high even when the error was close to 0.0. I manually searched values using trial and error. I was surprised that a value of 0.07 seemed to work well. A value close to zero didn't turn the car enough during curves and eventually the car would go off the road. A value closer to 1 would make the car oscillate too much.
+
+Next I tried to optimize the D parameter. Even with a descent value for P my car still went off the road during curves because the car would start oscillating too much eventually. This would create a positive feedback loop, the more the car would overshoot, the harder the stearing wheel would turn and the more the car would overshoot. The first value of 1 for the D parameter seemed to work well.
+
+Next I tried to optimize the I paramter. The I parameter offsets a bias in the steering mechanism of the car. I tried a value of 1 initially which made the car turn too much to the left. I got better results with values closer to 0, so I just set it to zero. This makes sense because it is a simulation, udacity would need to program a bias in the steering.
+
+## Chnage Throttle as per Steering value
+Idea is to use the calculated ```steer_value```'s absolute value to calculate throttle value.
+
+Same as above started off with setting D & I to 0 and vary P. With 0.1 I could see that the Throttle value was changing more realisticly. While changing the D parameter I saw a value of 1 started changing Throttle values by more that 10% so brought it down. With 0.1 I saw the throttle was not getting changed even when steervalue was high. Then I tried 0.5 whichl worked well till throttle constant at 0.4.
+
+Same as above left the I parameter to 0.
+ 
+##### Click to watch the video
+[![demo_gif1][image1]](./Recording-480.mov)
 
 ## Dependencies
 
